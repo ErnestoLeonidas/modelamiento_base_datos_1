@@ -9,4 +9,10 @@ CREATE TABLE Cliente(
     fono                NUMBER NOT NULL,  
     correo              VARCHAR2(250) NOT NULL, 
     comuna_id           NUMBER NOT NULL 
-)
+);
+
+CREATE TABLE Comuna( 
+    id_comuna NUMBER NOT NULL, 
+    nombre VARCHAR2(250) NOT NULL, 
+    provincia_id NUMBER NOT NULL 
+);
