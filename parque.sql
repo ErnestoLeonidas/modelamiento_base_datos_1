@@ -23,4 +23,41 @@ ALTER TABLE Comunas ADD CONSTRAINT comuna_PK PRIMARY KEY (id_comuna);
 
 ALTER TABLE Clientes ADD CONSTRAINT comuna_FK FOREIGN KEY (comuna_id) 
     REFERENCES Comunas (id_comuna);
+
+
+INSERT INTO Comunas VALUES(1, 'Arica', 1);
+
+INSERT INTO Clientes VALUES(1,'6','Alan','','Brito','','Su casa',555444,'su@correo.cl',1);
+
+SELECT 
+    cl.primer_nombre,
+    cl.apellido_paterno,
+    co.nombre AS "COMUNA"
+FROM Clientes cl
+    JOIN Comunas co ON (cl.comuna_id = co.id_comuna);
     
+    
+SELECT * FROM Comunas;
+
+SELECT * FROM Clientes;
+
+SELECT 
+    co.nombre
+FROM Comunas co;
+
+SELECT 
+    cl.rut_cliente,
+    cl.primer_nombre,
+    cl.apellido_paterno,
+    cl.comuna_id
+FROM Clientes cl;
+
+SELECT 
+    cl.rut_cliente AS "Rut",
+    cl.primer_nombre,
+    cl.apellido_paterno,
+    cl.comuna_id,
+    co.nombre AS "Nombre Comuna"
+FROM Clientes cl 
+    JOIN Comunas co ON (cl.comuna_id = co.id_comuna)
+;
