@@ -1,3 +1,9 @@
+-- 1. Primero Cree todas las tablas
+-- 2. Añada las claves primarias
+-- 3. Incluya las claves foraneas
+-- 4. Inserte valores a las tablas según el orden, 
+--    desde las tablas que no tienen foranea a las que si las poseen
+
 -- Crear Tabla Clientes
 CREATE TABLE Clientes( 
     rut_cliente         NUMBER(11) NOT NULL, 
@@ -17,9 +23,9 @@ ALTER TABLE Clientes ADD CONSTRAINT cliente_PK PRIMARY KEY (rut_cliente);
 
 --Creo Tabla Comunas
 CREATE TABLE Comunas( 
-    id_comuna NUMBER NOT NULL, 
-    nombre VARCHAR2(250) NOT NULL, 
-    provincia_id NUMBER NOT NULL 
+    id_comuna       NUMBER NOT NULL, 
+    nombre          VARCHAR2(250) NOT NULL, 
+    provincia_id    NUMBER NOT NULL 
 );
 
 -- Añadir la PK a la tabla Comunas
