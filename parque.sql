@@ -1,9 +1,3 @@
--- 1. Primero Cree todas las tablas
--- 2. Añada las claves primarias
--- 3. Incluya las claves foraneas
--- 4. Inserte valores a las tablas según el orden, 
---    desde las tablas que no tienen foranea a las que si las poseen
-
 -- Crear Tabla Clientes
 CREATE TABLE Clientes( 
     rut_cliente         NUMBER(11) NOT NULL, 
@@ -28,42 +22,78 @@ CREATE TABLE Comunas(
     provincia_id    NUMBER NOT NULL 
 );
 
--- Añadir la PK a la tabla Comunas
-ALTER TABLE Comunas ADD CONSTRAINT comuna_PK PRIMARY KEY (id_comuna);
-
 -- Añadir la Clave Foranea o FK a la tabla Clientes
 ALTER TABLE Clientes ADD CONSTRAINT comuna_FK FOREIGN KEY (comuna_id) 
     REFERENCES Comunas (id_comuna);
     
--- Ingresar datos en la Comunas
-INSERT INTO Comunas VALUES (1, 'Arica', 1);
-INSERT INTO Comunas VALUES (2, 'Los Muermos', 1);
-    
--- Ingresar datos a la tabla Clientes
-INSERT INTO Clientes VALUES (123,'K','Alan','','Brito','','Su casa #123',5555,'alan@frito.cl',1);
-INSERT INTO Clientes VALUES (456,'K','Pedro','','Brito','','Su casa #123',6666,'pedro@brito.cl',1);
+-- Añadir la PK a la tabla Comunas
+ALTER TABLE Comunas ADD CONSTRAINT comuna_PK PRIMARY KEY (id_comuna);
 
-INSERT INTO Clientes VALUES (124,'1','Maria','','Brito','','Su casa #123',7777,'maria@brito.cl',1);
 
--- Select básico
+
+-- Agregar datos a la tabla
+INSERT INTO Clientes VALUES (123456,'K','Juanito','','Brito','Delgado','Su casa #123',5555464,'juanito@gmail.com',2 );
+
+INSERT INTO Comunas VALUES (1,'Arica', 1);
+INSERT INTO Comunas VALUES (2,'Iquique', 1 );
+INSERT INTO Comunas VAlUES (3,'Los Muermos', 10);
+
+-- Consultar Tabla
 SELECT * FROM Clientes;
-SELECT * FROM Comunas;
+SELECT * FROM Comunas ORDER BY id_comuna ASC;
 
--- Select Ordenado según columna
-SELECT * FROM Clientes ORDER BY primer_nombre DESC;
-
-SELECT 
-    primer_nombre,
-    apellido_paterno,
-    comuna_id
-FROM Clientes;
+SELECT * FROM Provincias;
 
 
--- Select simple nivel 2
-SELECT 
-    cl.primer_nombre AS "Nombre",
-    cl.apellido_paterno AS "Apellido", 
-    co.nombre AS "Comuna"
-FROM Clientes cl
-    JOIN Comunas co ON (cl.comuna_id = co.id_comuna)
-;
+-- Crear Tabla Provincia
+CREATE TABLE Provincias(
+    id_provincia    NUMBER NOT NULL,
+    nombre          VARCHAR(250) NOT NULL,
+    region_id       NUMBER NOT NULL
+);
+
+ALTER TABLE Provincias ADD CONSTRAINT provincia_PK PRIMARY KEY (id_provincia);
+
+INSERT INTO Provincias VALUES (1,'Arica',1);
+INSERT INTO Provincias VALUES (10,'Puerto Montt',10);
+
+ALTER TABLE Comunas ADD CONSTRAINT provincia_FK FOREIGN KEY (provincia_id) 
+    REFERENCES Provincias (id_provincia);
+    
+
+-- Borrar tablas
+DROP TABLE Clientes;
+DROP TABLE Comunas;
+DROP TABLE Provincias;
+DROP TABLE Regiones;
+
+CREATE TABLE Regiones(
+    id_region   NUMBER          CONSTRAINT nn_id_reg     NOT NULL,
+    nombre      VARCHAR(250)    CONSTRAINT nn_nombre_reg NOT NULL
+);
+
+CREATE TABLE Provincias(
+    id_provincia    NUMBER          CONSTRAINT nn_id_prov       NOT NULL,
+    nombre          VARCHAR(250)    CONSTRAINT nn_nombre_prov   NOT NULL,
+    region_id       NUMBER          CONSTRAINT nn_region_id_prov     NOT NULL
+);
+
+-- CREAR SECUENCIA PARA IDS
+CREATE SEQUENCE seq_id_regiones
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 5
+MINVALUE 1
+NOCYCLE;
+
+DROP SEQUENCE seq_id_regiones
+
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Arica');
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Iquique');
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Antofagasta');
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Calama');
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Valparaiso');
+INSERT INTO Regiones VALUES (seq_id_regiones.NEXTVAL, 'Santiago');
+
+SELECT * FROM Regiones;
+DROP TABLE Regiones;
